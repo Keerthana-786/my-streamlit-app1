@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI OMR Evaluation</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #eef2f7, #d6e0f0);
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .navbar {
+      background: #4e73df;
+    }
+    .navbar-brand {
+      font-weight: 600;
+      color: #fff !important;
+      font-size: 1.3rem;
+    }
+    .hero {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1rem;
+    }
+    .card {
+      border-radius: 1rem;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      border: none;
+      max-width: 600px;
+      width: 100%;
+    }
+    .card-header {
+      background: #4e73df;
+      color: white;
+      border-radius: 1rem 1rem 0 0 !important;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    .card-header i {
+      font-size: 2.5rem;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+    .form-label {
+      font-weight: 500;
+      color: #344767;
+    }
+    .form-control {
+      border-radius: 0.6rem;
+      padding: 0.75rem;
+      font-size: 0.95rem;
+    }
+    .upload-section {
+      background: #f8faff;
+      padding: 1.25rem;
+      border-radius: 0.8rem;
+      border: 1px solid #e1e7f0;
+      transition: all 0.2s ease-in-out;
+    }
+    .upload-section:hover {
+      border-color: #4e73df;
+      background: #f0f4ff;
+      transform: scale(1.01);
+    }
+    .btn-primary {
+      background: #4e73df;
+      border: none;
+      border-radius: 0.6rem;
+      padding: 0.8rem;
+      font-size: 1.1rem;
+      transition: background 0.3s;
+    }
+    .btn-primary:hover {
+      background: #2e59d9;
+    }
+    .btn i {
+      margin-right: 0.5rem;
+    }
+    footer {
+      background: #4e73df;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+      margin-top: auto;
+      font-size: 0.9rem;
+    }
+
+    /* Loading Overlay */
+    #loadingOverlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 2000;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    #loadingOverlay.active {
+      visibility: visible;
+      opacity: 1;
+    }
+    .spinner-border {
+      width: 3rem;
+      height: 3rem;
+      color: #4e73df;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="#"><i class="bi bi-robot"></i> AI OMR Evaluator</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="card">
+      <div class="card-header">
+        <i class="bi bi-clipboard-check"></i>
+        <h2 class="mb-1">AI OMR Evaluation</h2>
+        <small class="text-light">Upload your OMR sheet and answer key to get instant results</small>
+      </div>
+      <div class="card-body p-4">
+        <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+          <div class="mb-3 upload-section">
+            <label for="omr_file" class="form-label"><i class="bi bi-file-earmark-image"></i> OMR Sheet</label>
+            <input class="form-control" type="file" id="omr_file" name="omr_file" accept="image/*" required>
+          </div>
+          <div class="mb-3 upload-section">
+            <label for="answer_key" class="form-label"><i class="bi bi-file-earmark-spreadsheet"></i> Answer Key</label>
+            <input class="form-control" type="file" id="answer_key" name="answer_key" accept=".csv,.xlsx,.xls,image/*" required>
+          </div>
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-play-circle"></i> Start Evaluation
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay">
+    <div class="spinner-border" role="status"></div>
+    <p class="fw-semibold text-dark">Evaluating... Please wait</p>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 AI OMR Evaluator | Powered by AI</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById('uploadForm');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+
+    form.addEventListener('submit', function() {
+      loadingOverlay.classList.add('active');
+    });
+  </script>
+</body>
+</html>
